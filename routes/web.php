@@ -27,3 +27,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/users', function () {
 return new UserCollection(User::all());
 });
+
+Route::get('/posts', function () {
+    return new PostCollection(Post::all());
+    });
