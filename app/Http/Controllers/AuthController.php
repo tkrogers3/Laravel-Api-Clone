@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\User;
 
 class AuthController extends Controller
 {
@@ -34,19 +36,26 @@ class AuthController extends Controller
         return response($response, 200);
     }
     public function register(Request $request)
-    {
-        $this->validate(request(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'username' => 'required'
-        ]);
-        $user = User::create(request(['name', 'username', 'email', 'password']));
-        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-        $response = [
-            'token' => $token,
-            'user' => $user,
-        ];
-        return response($response, 200);
+    { $this->validate(request(), [
+        'name' => 'required',
+        'username' => 'required',
+        'email' => 'required|email',
+        'password' => 'required'
+        ]); 
+        
+        $user = User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),]);
+            
+            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+        
+            $response = [
+                'token' => $token,
+                'user' => $user,
+            ];
+                
+                return response($response, 200);
     }
+
 }
