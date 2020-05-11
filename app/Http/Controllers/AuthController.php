@@ -12,7 +12,8 @@ class AuthController extends Controller
     {
         $user = User::where('email', $request->email)->first();
         if ($user) {
-            if ($request->password == $user->password) {
+        
+            if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
                 $response = [
                     'token' => $token,
@@ -28,6 +29,7 @@ class AuthController extends Controller
             return response($response, 422);
         }
     }
+
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
@@ -35,6 +37,7 @@ class AuthController extends Controller
         $response = 'You have been successfully logged out!';
         return response($response, 200);
     }
+
     public function register(Request $request)
     { $this->validate(request(), [
         'name' => 'required',
@@ -45,6 +48,7 @@ class AuthController extends Controller
         
         $user = User::create([
             'name' => $request['name'],
+            'username' => $request['username'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),]);
             
