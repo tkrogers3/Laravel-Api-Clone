@@ -28,7 +28,7 @@ Route::get('/user',function () {
 });
 
 Route::get('/posts',function () {
-   $Posts= Post::with(['comments', 'user'])->get();
+   $Posts= Post::with(['comments', 'user', 'comments.user'])->get();
    
     return new PostCollection($Posts);
 
