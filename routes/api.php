@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Resources\PostCollection;
 use App\Post;
 use App\User;
+use App\Comment;
 
 
 /*
@@ -27,22 +28,35 @@ Route::get('/user',function () {
 });
 
 Route::get('/posts',function () {
-   $Posts= Post::all();
-   foreach ($Posts as &$Post) {
-       $User = User::find($Post->user_id);
-       // $Post += [ $User => $User];
-       $Post['user'] = $User;
-       $Post['comments'] = $Post->comments();
-    }
-   
+   $Posts= Post::with(['comments', 'user'])->get();
    
     return new PostCollection($Posts);
 
 });
 
+// Route::get('/comments',function () {
+//     $Comments= Comment::all();
+//     foreach ($Comments as $Comment) {
+//         $Post = Post::find($Comment->post_id);
+//         // $Comment += [ $Post=> $Post];
+//         $Comment['post'] = $Post;
+//         $Comment['comments'] = $Post->comments();
+//      }
+    
+    
+//      return new CommentCollection($Comments);
+ 
+//  });
+
 Route::middleware('auth:api')->get('/post', function (Request $request) {
     return $request->post();
 });
  
+Route::group(['middleware' => 'auth:api'], function(){
+    Route::get('/logout', 'AuthController@logout');
+});
+
 Route::post('register','AuthController@register');
 Route::post('login','AuthController@login');
+
+
