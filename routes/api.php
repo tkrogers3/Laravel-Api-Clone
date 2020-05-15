@@ -33,20 +33,14 @@ Route::get('/posts',function () {
     return new PostCollection($Posts);
 
 });
-
-// Route::get('/comments',function () {
-//     $Comments= Comment::all();
-//     foreach ($Comments as $Comment) {
-//         $Post = Post::find($Comment->post_id);
-//         // $Comment += [ $Post=> $Post];
-//         $Comment['post'] = $Post;
-//         $Comment['comments'] = $Post->comments();
-//      }
+Route::get('/posts/{post}',function ($id) {
+    $Posts= Post::with(['comments', 'user', 'comments.user'])->get();
     
-    
-//      return new CommentCollection($Comments);
+     return new PostCollection($Posts);
  
-//  });
+ });
+
+
 
 Route::middleware('auth:api')->get('/post', function (Request $request) {
     return $request->post();
