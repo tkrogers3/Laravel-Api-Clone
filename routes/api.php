@@ -47,6 +47,7 @@ Route::middleware('auth:api')->get('/post', function (Request $request) {
 });
  
 Route::group(['middleware' => 'auth:api'], function(){
+    Route::post('/posts','AuthController@store');
     Route::get('/logout', 'AuthController@logout');
 });
 

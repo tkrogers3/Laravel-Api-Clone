@@ -62,4 +62,14 @@ class AuthController extends Controller
                 return response($response, 200);
     }
 
+    public function store(Request $request)
+    {
+    $post= new Post();
+    $post->title= $request.title;
+    $post->body= $request.body;
+    $post->save();
+    }
+
+
+    
 }

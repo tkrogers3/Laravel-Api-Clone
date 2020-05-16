@@ -24,7 +24,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        // 
     }
 
     /**
@@ -33,10 +33,13 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    // public function store(Request $request)
+    // {
+    // $post= new Post();
+    // $post->title= $request.title;
+    // $post->body= $request.body;
+    // $post->save();
+    // }
 
     /**
      * Display the specified resource.
