@@ -8,6 +8,7 @@ use App\User;
 use App\Comment;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,6 +28,9 @@ Route::get('/user',function () {
     return UserResource::collection(User::all());
 });
 
+
+
+////////////////////// Post Route to Post Collection 
 Route::get('/posts',function () {
    $Posts= Post::with(['comments', 'user', 'comments.user'])->get();
    
@@ -47,11 +51,11 @@ Route::middleware('auth:api')->get('/post', function (Request $request) {
 });
  
 Route::group(['middleware' => 'auth:api'], function(){
-    Route::post('/posts','AuthController@store');
     Route::get('/logout', 'AuthController@logout');
+    Route::post('/post','PostController@store');
 });
+
+//Post Routes
 
 Route::post('register','AuthController@register');
 Route::post('login','AuthController@login');
-
-

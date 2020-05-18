@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\User;
-
+use App\Post;
 class AuthController extends Controller
 {
     public function login(Request $request)
@@ -62,13 +62,7 @@ class AuthController extends Controller
                 return response($response, 200);
     }
 
-    public function store(Request $request)
-    {
-    $post= new Post();
-    $post->title= $request.title;
-    $post->body= $request.body;
-    $post->save();
-    }
+
 
 
     
