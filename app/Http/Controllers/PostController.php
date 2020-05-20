@@ -25,19 +25,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-
-        // Denis assisted
-        // $input = ($request->all() == null ? json_decode($request->getContent(), true) : $request->all());
-        // $post = Post::create([
-        //     'title' => $input['title'],
-        //     'user_id' => $input['user_id'],
-        //     'body' =>$input['body']
-        // ]);
-
+       
         $post = new Post();
-        $post->user_id = $request['user_id'];
-        $post->title= $request['title'];
-        $post->body= $request['body'];
+        $post->user_id = $request->input('user_id');
+        $post->title= $request->input('title');
+        $post->body= $request->input('body');
         $post->save();
         }
   

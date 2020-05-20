@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\UserCollection;
+use App\Http\Resources\PostCollection;
 Use App\User;
 /*
 |--------------------------------------------------------------------------
