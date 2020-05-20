@@ -36,6 +36,15 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         //
+         //Comment has user_id, title, body. 
+         //Comment needs to know what post it belongs to.
+         $comment = new Comment();
+         $comment->user_id = $request->input('user_id');
+         $comment->post_id = $request->input('post_id');
+         $comment->parent_id = $request->input('parent_id');
+         $comment->title = $request->input('title');  
+         $comment->body = $request->input('body');
+         $comment->save();
     }
 
     /**
@@ -44,9 +53,9 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
+    public function show(Request $request)
     {
-        //
+        
     }
 
     /**
