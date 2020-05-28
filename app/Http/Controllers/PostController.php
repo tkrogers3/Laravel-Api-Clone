@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Comment;
+use App\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -31,6 +33,10 @@ class PostController extends Controller
         $post->title= $request->input('title');
         $post->body= $request->input('body');
         $post->save();
+        $posts= Post::with(['comments', 'user', 'comments.user'])->latest()->get();
+         $response=["posts"=>$posts, "newPost"=>$post];
+        return response($response, 200);
+        dd($post);
         }
   
     /** 
@@ -50,11 +56,7 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
-    {
-        //
-    }
-
+  
     /**
      * Update the specified resource in storage.
      *
@@ -62,7 +64,7 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function updatePost(Request $request, Post $post)
     {
         //
     }
@@ -73,8 +75,13 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
-    {
-        //
+    // public function deletePost(Post $post, $id)
+    // {
+    //     //delete post - id, title,body, 
+    //     //comments - id,title,body, post id
+    //  $post= Post::where('post.id', $request->input('post.id');
+    //     $post->delete();
+    //   return response($response, 204);
+        
     }
 }

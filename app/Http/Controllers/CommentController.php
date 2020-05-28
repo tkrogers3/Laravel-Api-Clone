@@ -45,7 +45,9 @@ class CommentController extends Controller
          $comment->title = $request->input('title');  
          $comment->body = $request->input('body');
          $comment->save();
-    }
+         $response = 'You have been successfully created a post!';
+         return response($response, 200);
+        }
 
     /**
      * Display the specified resource.
