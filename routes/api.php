@@ -32,7 +32,7 @@ Route::get('/user',function () {
 
 ////////////////////// Post Route to Post Collection 
 Route::get('/posts',function () {
-   $Posts= Post::with(['comments', 'user', 'comments.user'])->take(5)->latest()->get();
+   $Posts= Post::with(['comments', 'user', 'comments.user'])->take(10)->latest()->get();
    
     return new PostCollection($Posts);
 
@@ -55,7 +55,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('/createpost','PostController@store');
     Route::post('/comment', 'CommentController@store');
     Route::put('/updatePost','PostController@updatePost');
-    Route::delete('/deletePost','PostController@deletePost');
+    Route::post('/deletePost','PostController@deletePost');
 
     Route::post('/test', function (){
         $Posts= Post::with(['comments', 'user', 'comments.user'])->latest()-> get();

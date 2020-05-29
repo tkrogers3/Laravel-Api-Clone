@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Post;
-use App\Comment;
-use App\User;
+
 use Illuminate\Http\Request;
+
 
 class PostController extends Controller
 {
@@ -20,25 +20,24 @@ class PostController extends Controller
     }
 
     /**
-    * Store a newly created resource in storage.
+     * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-       
+
         $post = new Post();
         $post->user_id = $request->input('user_id');
-        $post->title= $request->input('title');
-        $post->body= $request->input('body');
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
         $post->save();
-        $posts= Post::with(['comments', 'user', 'comments.user'])->latest()->get();
-         $response=["posts"=>$posts, "newPost"=>$post];
+        $posts = Post::with(['comments', 'user', 'comments.user'])->latest()->get();
+        $response = ["posts" => $posts, "newPost" => $post];
         return response($response, 200);
-        dd($post);
-        }
-  
+    }
+
     /** 
      * Display the specified resource.
      *
@@ -56,7 +55,7 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-  
+
     /**
      * Update the specified resource in storage.
      *
@@ -75,13 +74,14 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    // public function deletePost(Post $post, $id)
-    // {
-    //     //delete post - id, title,body, 
-    //     //comments - id,title,body, post id
-    //  $post= Post::where('post.id', $request->input('post.id');
-    //     $post->delete();
-    //   return response($response, 204);
-        
+    public function deletePost(Request $request)
+    {
+        //delete post - id, title,body from Posts table
+        //delete comments - id,title,body, post id from Comments table
+        $post = Post::where('id', $request->input('id'));
+        $post->delete();
+        $posts = Post::with(['comments', 'user', 'comments.user'])->latest()->get();
+        $response = ["message" => "Post has been deleted.", "posts" => $posts];
+        return response($response, 200);
     }
 }
